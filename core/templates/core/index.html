@@ -1,0 +1,13 @@
+<!-- core/templates/core/index.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<h1>Базовые приложения</h1>
+<ul>
+    {% for app in apps %}
+    <li><a href="{% url app.url_name %}">{{ app.name }}</a> - {{ app.description }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,11 @@
+<!-- core/templates/core/subapplication_detail.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}{{ subapplication.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ subapplication.name }}</h1>
+<p>{{ subapplication.description }}</p>
+
+<!-- Здесь могут быть формы, таблицы и другой функционал -->
+{% endblock %}
