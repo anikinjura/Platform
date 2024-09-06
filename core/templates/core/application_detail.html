@@ -10,7 +10,7 @@
 <h2>Подприложения</h2>
 <ul>
     {% for subapp in subapps %}
-    <li><a href="{% url subapp.url_name %}">{{ subapp.name }}</a> - {{ subapp.description }}</li>
+    <li><a href="{% url subapp.url_name application.name subapp.name %}">{{ subapp.name }}</a> - {{ subapp.description }}</li>
     {% endfor %}
 </ul>
 {% endblock %}

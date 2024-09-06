@@ -2,15 +2,14 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-# Список базовых приложений (пока статичный, позже можем автоматизировать)
+# Обновленный список базовых приложений
 APPS = [
-    {'name': 'Справочники', 'url_name': 'core:application_detail', 'description': 'Управление справочниками системы.'},
-    {'name': 'Документы', 'url_name': 'core:application_detail', 'description': 'Фиксация событий в системе.'},
-    {'name': 'Регистры', 'url_name': 'core:application_detail', 'description': 'Записи о событиях и накопленные итоги.'},
-    {'name': 'Отчеты', 'url_name': 'core:application_detail', 'description': 'Извлечение и визуализация данных.'},
+    {'name': 'Catalogs', 'url_name': 'core:application_detail', 'description': 'Управление справочниками системы.'},
+    {'name': 'Documents', 'url_name': 'core:application_detail', 'description': 'Фиксация событий в системе.'},
+    {'name': 'Registers', 'url_name': 'core:application_detail', 'description': 'Записи о событиях и накопленные итоги.'},
+    {'name': 'Reports', 'url_name': 'core:application_detail', 'description': 'Извлечение и визуализация данных.'},
 ]
 
-# Главная страница
 class IndexView(TemplateView):
     template_name = 'core/index.html'
 
@@ -19,7 +18,6 @@ class IndexView(TemplateView):
         context['apps'] = APPS
         return context
 
-# Страница базового приложения
 class ApplicationDetailView(TemplateView):
     template_name = 'core/application_detail.html'
 
@@ -27,13 +25,11 @@ class ApplicationDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
         app_name = kwargs.get('app_name')
         context['application'] = next(app for app in APPS if app['name'] == app_name)
-        # Пока что статично, позже будет динамическое
         context['subapps'] = [
-            {'name': 'Агенты', 'url_name': 'core:subapplication_detail', 'description': 'Управление агентами.'},
+            {'name': 'Entities', 'url_name': 'core:subapplication_detail', 'description': 'Управление сущностями в выбранном приложении.'},
         ]
         return context
 
-# Страница подприложения
 class SubApplicationDetailView(TemplateView):
     template_name = 'core/subapplication_detail.html'
 
@@ -43,6 +39,6 @@ class SubApplicationDetailView(TemplateView):
         subapp_name = kwargs.get('subapp_name')
         context['subapplication'] = {
             'name': subapp_name,
-            'description': 'Функционал подприложения {}'.format(subapp_name)
+            'description': f'Функционал подприложения {subapp_name}'
         }
         return context

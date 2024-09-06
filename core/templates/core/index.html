@@ -7,7 +7,7 @@
 <h1>Базовые приложения</h1>
 <ul>
     {% for app in apps %}
-    <li><a href="{% url app.url_name %}">{{ app.name }}</a> - {{ app.description }}</li>
+    <li><a href="{% url app.url_name app.name %}">{{ app.name }}</a> - {{ app.description }}</li>
     {% endfor %}
 </ul>
 {% endblock %}
