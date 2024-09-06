@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-# Обновленный список базовых приложений
+# Базовые приложения (объекты метаданных)
 APPS = [
     {'name': 'Catalogs', 'url_name': 'core:application_detail', 'description': 'Управление справочниками системы.'},
     {'name': 'Documents', 'url_name': 'core:application_detail', 'description': 'Фиксация событий в системе.'},

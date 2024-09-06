@@ -21,8 +21,8 @@ def extract_code_from_files(directory, output_file,
                         outfile.write("\n" + "#" * 80 + "\n\n")  # Разделитель между файлами
 
 # Пример использования:
-directory_path = "C:/Users/y.ank/dev/Platform/core"  # Укажи путь к своему проекту
-output_file = "C:/Users/y.ank/dev/Platform/platform_base/extracted_code.txt"  # Укажи путь к файлу, куда сохранить код
+directory_path = "C:\Users\Yuriy\dev\Platform\core"  # Укажи путь к своему проекту
+output_file = "C:\Users\Yuriy\dev\Platform\core\extracted_code.txt"  # Укажи путь к файлу, куда сохранить код
 extract_code_from_files(directory_path, output_file)
 
 print(f"Код всех файлов из {directory_path} был успешно выгружен в {output_file}.")
