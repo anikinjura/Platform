@@ -1,0 +1,473 @@
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\admin.py ###
+from django.contrib import admin
+
+# Register your models here.
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\apps.py ###
+from django.apps import AppConfig
+
+
+class CoreConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'core'
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\models.py ###
+# core/models.py
+from django.db import models
+
+# Модель, которая может быть расширена объектами метаданных
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\tests.py ###
+from django.test import TestCase
+
+# Create your tests here.
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\urls.py ###
+from django.urls import path, include
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
+from . import views
+
+app_name = 'core'
+
+# Настройка Swagger
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Platform API",
+        default_version='v1',
+        description="API документация для платформы",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@platform.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+urlpatterns = [
+    # Маршруты для отображения структуры приложений и подприложений
+    path('', views.IndexView.as_view(), name='index'),
+    path('application/<str:app_name>/', views.ApplicationDetailView.as_view(), name='application_detail'),
+    path('application/<str:app_name>/<str:subapp_name>/', views.SubApplicationDetailView.as_view(), name='subapplication_detail'),
+
+    # Подключение маршрутов API
+    path('api/', include('core.api.urls')),
+
+    # Маршруты для документации Swagger и Redoc
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\views.py ###
+# core/views.py
+from django.shortcuts import render
+from django.views.generic import TemplateView
+
+# Базовые приложения (объекты метаданных)
+APPS = [
+    {'name': 'Catalogs', 'url_name': 'core:application_detail', 'description': 'Управление справочниками системы.'},
+    {'name': 'Documents', 'url_name': 'core:application_detail', 'description': 'Фиксация событий в системе.'},
+    {'name': 'Registers', 'url_name': 'core:application_detail', 'description': 'Записи о событиях и накопленные итоги.'},
+    {'name': 'Reports', 'url_name': 'core:application_detail', 'description': 'Извлечение и визуализация данных.'},
+]
+
+class IndexView(TemplateView):
+    template_name = 'core/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['apps'] = APPS
+        return context
+
+class ApplicationDetailView(TemplateView):
+    template_name = 'core/application_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        app_name = kwargs.get('app_name')
+        context['application'] = next(app for app in APPS if app['name'] == app_name)
+        context['subapps'] = [
+            {'name': 'Entities', 'url_name': 'core:subapplication_detail', 'description': 'Управление сущностями в выбранном приложении.'},
+        ]
+        return context
+
+class SubApplicationDetailView(TemplateView):
+    template_name = 'core/subapplication_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        app_name = kwargs.get('app_name')
+        subapp_name = kwargs.get('subapp_name')
+        context['subapplication'] = {
+            'name': subapp_name,
+            'description': f'Функционал подприложения {subapp_name}'
+        }
+        return context
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\api\permissions.py ###
+# core/api/permissions.py
+from rest_framework import permissions
+
+class IsAdminOrReadOnly(permissions.BasePermission):
+    """
+    Разрешает доступ на запись только администраторам, а чтение — всем пользователям.
+    """
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user and request.user.is_staff
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\api\serializers.py ###
+# core/api/serializers.py
+from rest_framework import serializers
+
+class BaseSerializer(serializers.ModelSerializer):
+    """
+    Базовый сериализатор, который можно наследовать для стандартных моделей.
+    """
+    class Meta:
+        model = None  # Этот атрибут должен быть установлен в наследуемом классе
+        fields = '__all__'  # По умолчанию возвращаем все поля модели
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\api\urls.py ###
+# core/api/urls.py
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
+from .views import TestViewSet
+
+router = DefaultRouter()
+router.register(r'test', TestViewSet, basename='test') # тестовая регистрация роутера для API
+# Здесь будут зарегистрированы все viewsets от объектов метаданных
+
+urlpatterns = [
+    path('', include(router.urls)),
+    #path('api/', include(router.urls)),
+]
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\api\views.py ###
+# core/api/views.py
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
+
+class TestViewSet(viewsets.ViewSet):
+    """
+    Чтобы маршрут /api/ начал работать, нужно зарегистрировать хотя бы один ViewSet в роутере.
+    Это тестовый ViewSet
+    """
+    def list(self, request):
+        return Response({"message": "API is working!"})
+
+class BaseViewSet(viewsets.ViewSet):
+    """
+    Базовый ViewSet, который можно наследовать для создания стандартных API.
+    """
+
+    queryset = None  # Этот атрибут должен быть установлен в наследуемом классе
+    serializer_class = None  # Этот атрибут должен быть установлен в наследуемом классе
+
+    def list(self, request):
+        """
+        Получить список объектов.
+        """
+        queryset = self.queryset.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        """
+        Получить конкретный объект по ID.
+        """
+        try:
+            instance = self.queryset.get(pk=pk)
+            serializer = self.serializer_class(instance)
+            return Response(serializer.data)
+        except self.queryset.model.DoesNotExist:
+            return Response({'error': 'Object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def create(self, request):
+        """
+        Создать новый объект.
+        """
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, pk=None):
+        """
+        Обновить существующий объект.
+        """
+        try:
+            instance = self.queryset.get(pk=pk)
+        except self.queryset.model.DoesNotExist:
+            return Response({'error': 'Object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.serializer_class(instance, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        """
+        Удалить объект.
+        """
+        try:
+            instance = self.queryset.get(pk=pk)
+            instance.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except self.queryset.model.DoesNotExist:
+            return Response({'error': 'Object not found'}, status=status.HTTP_404_NOT_FOUND)
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\management\commands\generate_subapp.py ###
+# core/management/commands/generate_subapp.py
+
+import os
+from django.core.management.base import BaseCommand
+
+class Command(BaseCommand):
+    help = 'Генерация подприложений для базовых приложений платформы'
+
+    def add_arguments(self, parser):
+        parser.add_argument('--app_name', type=str, help='Имя базового приложения (например, Catalogs)')
+        parser.add_argument('--subapp_name', type=str, help='Имя подприложения (например, Agent)')
+
+    def handle(self, *args, **kwargs):
+        app_name = kwargs['app_name']
+        subapp_name = kwargs['subapp_name']
+        
+        # Указываем пути
+        base_dir = os.path.join('apps', app_name.lower(), subapp_name.lower())
+        os.makedirs(base_dir, exist_ok=True)
+        
+        # Создаем файлы подприложения (например, views.py, urls.py, templates)
+        self.create_file(base_dir, 'views.py', self.generate_views_code(subapp_name))
+        self.create_file(base_dir, 'urls.py', self.generate_urls_code(subapp_name))
+        self.create_template_file(base_dir, subapp_name)
+
+        self.stdout.write(self.style.SUCCESS(f'Подприложение {subapp_name} для {app_name} создано.'))
+
+    def create_file(self, directory, filename, content):
+        filepath = os.path.join(directory, filename)
+        with open(filepath, 'w') as file:
+            file.write(content)
+
+    def create_template_file(self, directory, subapp_name):
+        template_dir = os.path.join(directory, 'templates', subapp_name.lower())
+        os.makedirs(template_dir, exist_ok=True)
+        template_path = os.path.join(template_dir, f'{subapp_name.lower()}_detail.html')
+        with open(template_path, 'w') as file:
+            file.write(f'<!-- Шаблон для {subapp_name} -->')
+
+    def generate_views_code(self, subapp_name):
+        return f"""
+from django.shortcuts import render
+from django.views.generic import TemplateView
+
+class {subapp_name}DetailView(TemplateView):
+    template_name = '{subapp_name.lower()}/{subapp_name.lower()}_detail.html'
+"""
+
+    def generate_urls_code(self, subapp_name):
+        return f"""
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.{subapp_name}DetailView.as_view(), name='{subapp_name.lower()}_detail'),
+]
+"""
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\scripts\extract_code.py ###
+import os
+
+def extract_code_from_files(directory, output_file, 
+                            file_extensions=('.py', '.html', '.css', '.js'),
+                            exclude_dirs=('migrations', '__pycache__'),
+                            exclude_files=('__init__.py',)):
+    
+    with open(output_file, 'w', encoding='utf-8') as outfile:
+        for root, dirs, files in os.walk(directory):
+            # Исключаем директории
+            dirs[:] = [d for d in dirs if d not in exclude_dirs]
+            
+            for file in files:
+                if file.endswith(file_extensions) and file not in exclude_files:
+                    file_path = os.path.join(root, file)
+                    with open(file_path, 'r', encoding='utf-8') as infile:
+                        code = infile.read()
+                        # Запись кода в файл
+                        outfile.write(f"### Код из файла: {file_path} ###\n")
+                        outfile.write(code)
+                        outfile.write("\n" + "#" * 80 + "\n\n")  # Разделитель между файлами
+
+# Пример использования:
+directory_path = "C:/Users/Yuriy/dev/Platform/core"  # Укажи путь к своему проекту
+output_file = "C:/Users/Yuriy/dev/Platform/core/extracted_code.txt"  # Укажи путь к файлу, куда сохранить код
+extract_code_from_files(directory_path, output_file)
+
+print(f"Код всех файлов из {directory_path} был успешно выгружен в {output_file}.")
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\static\core\css\styles.css ###
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header, footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+main {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+}
+
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\templates\core\application_detail.html ###
+<!-- core/templates/core/application_detail.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}{{ application.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ application.name }}</h1>
+<p>{{ application.description }}</p>
+
+<h2>Подприложения</h2>
+<ul>
+    {% for subapp in subapps %}
+    <li><a href="{% url subapp.url_name application.name subapp.name %}">{{ subapp.name }}</a> - {{ subapp.description }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\templates\core\base.html ###
+<!-- core/templates/core/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Система управления ПВЗ{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        {% block header %}
+        <h1>Добро пожаловать в систему управления ПВЗ</h1>
+        {% endblock %}
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+        <p>&copy; 2024 Система управления ПВЗ</p>
+        {% endblock %}
+    </footer>
+</body>
+</html>
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\templates\core\index.html ###
+<!-- core/templates/core/index.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<h1>Базовые приложения</h1>
+<ul>
+    {% for app in apps %}
+    <li><a href="{% url app.url_name app.name %}">{{ app.name }}</a> - {{ app.description }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+################################################################################
+
+### Код из файла: C:/Users/Yuriy/dev/Platform/core\templates\core\subapplication_detail.html ###
+<!-- core/templates/core/subapplication_detail.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}{{ subapplication.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ subapplication.name }}</h1>
+<p>{{ subapplication.description }}</p>
+
+<!-- Здесь могут быть формы, таблицы и другой функционал -->
+{% endblock %}
+
+################################################################################
+

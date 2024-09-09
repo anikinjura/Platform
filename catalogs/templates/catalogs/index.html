@@ -1,0 +1,17 @@
+<!-- catalogs/templates/catalogs/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Справочники</title>
+</head>
+<body>
+    <h1>Список справочников</h1>
+    <ul>
+        {% for catalog in catalog_list %}
+            <li><a href="{% url 'catalogs:catalog_detail' catalog.pk %}">{{ catalog.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

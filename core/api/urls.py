@@ -10,5 +10,4 @@ router.register(r'test', TestViewSet, basename='test') # тестовая рег
 
 urlpatterns = [
     path('', include(router.urls)),
-    #path('api/', include(router.urls)),
 ]
