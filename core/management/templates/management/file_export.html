@@ -2,11 +2,16 @@
 {% extends 'management/base.html' %}
 
 {% block management_content %}
-    <h2>Выгрузка файлов</h2>
+    <h2>Выгрузка кода файлов</h2>
     <form method="POST">
         {% csrf_token %}
         <label for="directory">Укажите путь к директории:</label>
-        <input type="text" id="directory" name="directory" required>
+        <input type="text" name="directory" id="directory" placeholder="Введите путь к директории" required>
         <button type="submit">Выгрузить</button>
     </form>
+    
+    {% if file_contents %}
+    <h3>Результаты выгрузки</h3>
+    <pre style="background-color: #f5f5f5; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap;">{{ file_contents }}</pre>
+    {% endif %}
 {% endblock %}
