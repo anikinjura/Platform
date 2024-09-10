@@ -7,4 +7,4 @@ class CatalogAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at', 'updated_at')
     search_fields = ('name',)
 
-admin.site.register(CatalogBase, CatalogAdmin)
+# admin.site.register(CatalogBase, CatalogAdmin)

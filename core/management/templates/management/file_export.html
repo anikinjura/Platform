@@ -1,0 +1,12 @@
+<!-- core/management/templates/management/file_export.html -->
+{% extends 'management/base.html' %}
+
+{% block management_content %}
+    <h2>Выгрузка файлов</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="directory">Укажите путь к директории:</label>
+        <input type="text" id="directory" name="directory" required>
+        <button type="submit">Выгрузить</button>
+    </form>
+{% endblock %}
