@@ -1,6 +1,7 @@
 # core/management/utils.py
 
 import os
+import logging
 
 def get_files_from_directory(directory, 
                              file_extensions=('.py', '.html', '.css', '.js'),
@@ -32,8 +33,9 @@ def get_files_from_directory(directory,
                         # Сохраняем содержимое файла в словарь
                         file_contents[file_path] = code
                 except Exception as e:
-                    # В случае ошибки с чтением файла, просто пропускаем его
-                    file_contents[file_path] = f"Ошибка при чтении файла: {str(e)}"
+                    # В случае ошибки с чтением файла, просто пропускаем его и добавляем информацию в логи
+                    logging.error(f"Ошибка при чтении файла {file_path}: {str(e)}")
+                    continue
     
     return file_contents
 

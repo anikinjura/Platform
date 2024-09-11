@@ -2,12 +2,44 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-# Базовые приложения (объекты метаданных)
+# Базовые приложения (объекты метаданных) и их подприложения
 APPS = [
-    {'name': 'Catalogs', 'url_name': 'core:application_detail', 'description': 'Управление справочниками системы.'},
-    {'name': 'Documents', 'url_name': 'core:application_detail', 'description': 'Фиксация событий в системе.'},
-    {'name': 'Registers', 'url_name': 'core:application_detail', 'description': 'Записи о событиях и накопленные итоги.'},
-    {'name': 'Reports', 'url_name': 'core:application_detail', 'description': 'Извлечение и визуализация данных.'},
+    {
+        'name': 'Catalogs',
+        'url_name': 'core:application_detail',
+        'description': 'Управление справочниками системы.',
+        'subapps': [
+            {'name': 'Agents', 'url': '/catalogs/agents/'},
+            {'name': 'Pickup Points', 'url': '/catalogs/pickup-points/'}
+        ]
+    },
+    {
+        'name': 'Documents',
+        'url_name': 'core:application_detail',
+        'description': 'Фиксация событий в системе.',
+        'subapps': [
+            {'name': 'Orders', 'url': '/documents/orders/'},
+            {'name': 'Deliveries', 'url': '/documents/deliveries/'}
+        ]
+    },
+    {
+        'name': 'Registers',
+        'url_name': 'core:application_detail',
+        'description': 'Записи о событиях и накопленные итоги.',
+        'subapps': []
+    },
+    {
+        'name': 'Reports',
+        'url_name': 'core:application_detail',
+        'description': 'Извлечение и визуализация данных.',
+        'subapps': []
+    }
+]
+
+# Базовые утилиты ядра
+MANAGEMENT_TOOLS = [
+    {'name': 'Выгрузка файлов', 'url': '/management/file-export/'},
+    # Другие утилиты ядра
 ]
 
 class IndexView(TemplateView):
@@ -16,6 +48,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['apps'] = APPS
+        context['management_tools'] = MANAGEMENT_TOOLS  # Передаем утилиты в контекст
         return context
 
 class ApplicationDetailView(TemplateView):
