@@ -2,13 +2,13 @@
 <nav>
     <h3>Навигация</h3>
     <ul>
-        {% for app in apps %}
+        {% for app in APPS %}
             <li>
-                <a href="{% url app.url_name app.name %}">{{ app.display_name }}</a> - {{ app.description }}
+                <a href="{% url app.url_name app.name %}">{{ app.name }}</a> - {{ app.description }}
                 {% if app.subapps %}
                     <ul>
                         {% for subapp in app.subapps %}
-                            <li><a href="{{ subapp.url }}">{{ subapp.display_name }}</a></li>
+                            <li><a href="{{ subapp.url }}">{{ subapp.name }}</a></li>
                         {% endfor %}
                     </ul>
                 {% endif %}
