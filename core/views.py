@@ -1,6 +1,7 @@
 # core/views.py
 
 from django.views.generic import TemplateView
+from django.urls import reverse_lazy
 
 APPS = [
     {
@@ -41,7 +42,8 @@ APPS = [
 
 # Базовые утилиты ядра
 MANAGEMENT_TOOLS = [
-    {'name': 'Выгрузка текста из файлов каталога', 'url': '/management/file-export/'},
+    #{'name': 'Выгрузка текста из файлов каталога', 'url': '/management/file-export/'},
+    {'name': 'Выгрузка текста из файлов каталога', 'url': reverse_lazy('core:management:file_export')},  # Используем reverse_lazy
     # Другие утилиты ядра
 ]
 
