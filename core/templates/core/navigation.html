@@ -1,25 +1,44 @@
 <!-- core/templates/core/navigation.html -->
-<nav>
-    <h3>Навигация</h3>
-    <ul>
-        {% for app in apps %}
-            <li>
-                <a href="{% url app.url_name app.name %}">{{ app.display_name }}</a> - {{ app.description }}
-                {% if app.subapps %}
-                    <ul>
-                        {% for subapp in app.subapps %}
-                            <li><a href="{{ subapp.url }}">{{ subapp.display_name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+{% load static %}
 
-    <h3>Управление</h3>
-    <ul>
-        {% for tool in management_tools %}
-            <li><a href="{{ tool.url }}">{{ tool.name }}</a></li>
-        {% endfor %}
+<!-- 
+    Шаблон: core/templates/core/navigation.html
+    Описание: Содержит навигационную панель с иконками и функцией сворачивания. 
+    При сворачивании панели текст скрывается, остаются только иконки.
+-->
+
+<nav id="sidebar" class="sidebar flex-column bg-light">
+    <div class="sidebar-header d-flex justify-content-end">
+        <!-- Кнопка для сворачивания/разворачивания панели -->
+        <button class="btn btn-primary" id="sidebarToggle">
+            <i class="bi bi-list"></i> <!-- Иконка меню -->
+        </button>
+    </div>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <!-- Ссылка на главную страницу с иконкой домика -->
+            <a class="nav-link active" href="#">
+                <i class="bi bi-house-door"></i> <!-- Иконка домика -->
+                <span class="link-text">Главная</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="bi bi-link"></i> <!-- Иконка ссылки -->
+                <span class="link-text">Ссылка 1</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="bi bi-link"></i> <!-- Иконка ссылки -->
+                <span class="link-text">Ссылка 2</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="bi bi-link"></i> <!-- Иконка ссылки -->
+                <span class="link-text">Ссылка 3</span>
+            </a>
+        </li>
     </ul>
 </nav>
