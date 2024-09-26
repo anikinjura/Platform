@@ -28,8 +28,13 @@ body {
     width: 70px;
 }
 
-.sidebar.collapsed .link-text {
-    display: none;
+.sidebar .nav-item {
+    position: relative;
+}
+
+/* Скрытие тултипов при развернутой панели */
+.sidebar:not(.collapsed) .nav-item [data-bs-toggle="tooltip"] {
+    pointer-events: none;
 }
 
 /* Стили ссылок в навигационной панели */
@@ -42,6 +47,23 @@ body {
 .sidebar .nav-link i {
     margin-right: 10px;
     font-size: 1.2rem;
+}
+
+/* Скрытие текста ссылок при сворачивании */
+.sidebar.collapsed .link-text {
+    display: none;
+}
+
+/* Стили для иконки кнопки сворачивания/разворачивания */
+.sidebar-header .btn {
+    font-size: 1.5rem;
+    border: none;
+    background-color: transparent;
+}
+
+/* Изменение цвета иконки на серый */
+.sidebar-header .btn .toggle-icon {
+    color: #6c757d; /* Серый цвет */
 }
 
 /* Стили для основного контента */

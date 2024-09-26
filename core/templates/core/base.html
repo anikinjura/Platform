@@ -47,9 +47,20 @@
 
     <!-- Скрипт для сворачивания/разворачивания навигационной панели -->
     <script>
+        // Функция для сворачивания/разворачивания панели и изменения кнопки
         document.getElementById('sidebarToggle').addEventListener('click', function () {
             var sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('collapsed');
+
+            // Изменение направления иконки кнопки
+            var toggleIcon = this.querySelector('.toggle-icon');
+            if (sidebar.classList.contains('collapsed')) {
+                toggleIcon.textContent = '›';
+                showTooltips(true); // Включить тултипы
+            } else {
+                toggleIcon.textContent = '‹';
+                showTooltips(false); // Отключить тултипы
+            }
 
             // Скрытие/отображение текста наименований
             var linkTexts = document.querySelectorAll('.sidebar .link-text');
@@ -57,6 +68,28 @@
                 linkText.classList.toggle('d-none');
             });
         });
+
+        // Функция для включения/отключения тултипов
+        function showTooltips(enable) {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            if (enable) {
+                tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                    new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            } else {
+                tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                    var tooltipInstance = bootstrap.Tooltip.getInstance(tooltipTriggerEl);
+                    if (tooltipInstance) {
+                        tooltipInstance.dispose(); // Отключить тултип
+                    }
+                });
+            }
+        }
+
+        // Инициализация тултипов только при старте, если панель свернута
+        if (document.getElementById('sidebar').classList.contains('collapsed')) {
+            showTooltips(true);
+        }
     </script>
 </body>
 </html>
