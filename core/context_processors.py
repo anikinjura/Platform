@@ -1,12 +1,10 @@
 # core/context_processors.py
+from core.utils import get_installed_apps_with_subapps
 
-from .views import APPS, MANAGEMENT_TOOLS
-
-def apps_context(request):
+def installed_apps(request):
     """
-    Добавляет список объектов метаданных (приложений) и утилит управления в контекст всех шаблонов.
+    Контекстный процессор для получения списка установленных приложений и их подприложений.
     """
     return {
-        'apps': APPS,
-        'management_tools': MANAGEMENT_TOOLS,
+        'installed_apps': get_installed_apps_with_subapps(),
     }

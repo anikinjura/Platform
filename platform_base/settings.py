@@ -68,7 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'core.context_processors.apps_context', # кастомный контекст-процессор
+                'core.context_processors.installed_apps', # кастомный контекст-процессор, передающий в шаблоны перечень установленных приложений платформы
             ],
         },
     },

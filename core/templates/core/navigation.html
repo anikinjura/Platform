@@ -22,23 +22,22 @@
                 <span class="link-text">Главная</span>
             </a>
         </li>
-        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Ссылка 1">
+    
+        <!-- Показываем установленные в платформе базовые приложения (объекты метаданных: Справочники, Документы, Отчеты, Регистры) и их подприложения -->
+    {% for app_name, app_info in installed_apps.items %}
+        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title={{ app_info.verbose_name }}>
             <a class="nav-link" href="#">
                 <i class="bi bi-link"></i> <!-- Иконка ссылки -->
-                <span class="link-text">Ссылка 1</span>
+                <span class="link-text">{{ app_info.verbose_name }}</span>
             </a>
+        {% if app_info.sub_apps %}
+            <ul>
+            {% for sub_app in app_info.sub_apps %}
+                <li><a href="#">{{ sub_app }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
         </li>
-        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Ссылка 2">
-            <a class="nav-link" href="#">
-                <i class="bi bi-link"></i> <!-- Иконка ссылки -->
-                <span class="link-text">Ссылка 2</span>
-            </a>
-        </li>
-        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Ссылка 3">
-            <a class="nav-link" href="#">
-                <i class="bi bi-link"></i> <!-- Иконка ссылки -->
-                <span class="link-text">Ссылка 3</span>
-            </a>
-        </li>
+    {% endfor %}
     </ul>
 </nav>
