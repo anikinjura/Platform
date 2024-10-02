@@ -1,22 +1,4 @@
 /* core/static/core/css/styles.css */
-/* 
-    Файл: core/static/core/css/styles.css
-    Описание: Стили для базового оформления страницы, включая сворачиваемую навигационную панель.
-*/
-
-/* Общие стили для основного контента */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-/* Стили верхней панели */
-.top-bar {
-    background-color: #007bff;
-    color: #fff;
-    height: 60px;
-}
 
 /* Стили для навигационной панели */
 .sidebar {
@@ -52,6 +34,11 @@ body {
 /* Скрытие текста ссылок при сворачивании */
 .sidebar.collapsed .link-text {
     display: none;
+}
+
+/* Добавляем отступы для подприложений */
+.nav .ms-3 {
+    margin-left: 1rem;
 }
 
 /* Стили для иконки кнопки сворачивания/разворачивания */

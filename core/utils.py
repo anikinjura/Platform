@@ -33,14 +33,22 @@ def get_installed_apps_with_subapps():
 
 def get_sub_apps(base_app_name, custom_apps):
     """
-    Возвращает список подприложений, исходя из регистраций в CUSTOM_APPS.
-    Подприложения определяются через точку после имени базового приложения.
+    Возвращает список подприложений, зарегистрированных в Django как дочерние.
+    Используем метод apps.get_app_config для извлечения verbose_name подприложений.
     """
     sub_apps = []
 
     # Ищем все приложения, зарегистрированные через точку после имени базового приложения
     for app in custom_apps:
         if app.startswith(base_app_name + '.'):
-            sub_apps.append(app.split('.')[-1])
+            try:
+                sub_app_config = apps.get_app_config(app.split('.')[-1])
+                sub_apps.append({
+                    'name': sub_app_config.name,
+                    'verbose_name': getattr(sub_app_config, 'verbose_name', sub_app_config.name),
+                    'description': getattr(sub_app_config, 'description', 'Описание отсутствует')
+                })
+            except LookupError:
+                continue
 
     return sub_apps
