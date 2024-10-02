@@ -29,8 +29,8 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
-INSTALLED_APPS = [
+# Системные приложения
+SYSTEM_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,10 +40,20 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'django_extensions',
+    # Другие системные приложения
+]
+
+# Пользовательские приложения
+CUSTOM_APPS = [
     'core',
     'core.management',
     'catalogs',
+    # Другие приложения платформы
 ]
+
+# Объединяем их для использования Django
+INSTALLED_APPS = SYSTEM_APPS + CUSTOM_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
