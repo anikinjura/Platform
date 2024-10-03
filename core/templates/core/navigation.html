@@ -1,43 +1,63 @@
-<!-- core/templates/core/navigation.html -->
 {% load static %}
-
-<!-- 
-    Шаблон: core/templates/core/navigation.html
-    Описание: Содержит навигационную панель с иконками и функцией сворачивания. 
-    При сворачивании панели текст скрывается, остаются только иконки.
--->
 
 <nav id="sidebar" class="sidebar flex-column bg-light">
     <div class="sidebar-header d-flex justify-content-end">
-        <!-- Кнопка для сворачивания/разворачивания панели -->
         <button class="btn" id="sidebarToggle">
-            <i class="toggle-icon text-secondary">‹</i> <!-- Иконка со стрелкой серого цвета -->
+            <i class="toggle-icon text-secondary">‹</i>
         </button>
     </div>
     <ul class="nav flex-column">
-        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Главная">
-            <!-- Ссылка на главную страницу с иконкой домика -->
-            <a class="nav-link active" href="#">
-                <i class="bi bi-house-door"></i> <!-- Иконка домика -->
-                <span class="link-text">Главная</span>
-            </a>
+        <li class="nav-item">
+            <button class="menu-item button">
+                <div class="menu-icon">
+                     <!--
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M6 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0m8-16a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0m8-16a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0"></path>
+                    </svg>
+                     -->
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6z"/>
+                        <path fill="currentColor" d="M8 4h8v1H8zm0 3h8v1H8zm0 3h8v1H8zm0 3h8v1H8z"/>
+                    </svg>
+                </div>
+                <div class="menu-label">
+                    <div class="label-text">Главная</div>
+                </div>
+                <div class="menu-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="m10 8 5 4-5 4z"></path>
+                    </svg>
+                </div>
+            </button>
         </li>
-    
-        <!-- Показываем установленные в платформе базовые приложения и их подприложения -->
+
+        <!-- Базовые приложения и их подприложения -->
         {% for app_name, app_info in installed_apps.items %}
-        <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ app_info.verbose_name }}">
-            <a class="nav-link" href="#">
-                <i class="bi bi-link"></i> <!-- Иконка ссылки -->
-                <span class="link-text">{{ app_info.verbose_name }}</span>
-            </a>
+        <li class="nav-item has-submenu">
+            <button class="menu-item button">
+                <div class="menu-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12 2l8 8h-6v10h-4V10H4l8-8z"></path>
+                    </svg>
+                </div>
+                <div class="menu-label">
+                    <div class="label-text">{{ app_info.verbose_name }}</div>
+                </div>
+                <div class="menu-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="m10 8 5 4-5 4z"></path>
+                    </svg>
+                </div>
+            </button>
             {% if app_info.sub_apps %}
-            <ul class="nav flex-column ms-3">
+            <ul class="submenu nav flex-column">
                 {% for sub_app in app_info.sub_apps %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-dot"></i> <!-- Иконка подприложения -->
-                        <span class="link-text">{{ sub_app.verbose_name }}</span>
-                    </a>
+                    <button class="menu-item button">
+                        <div class="menu-label">
+                            <div class="label-text">{{ sub_app.verbose_name }}</div>
+                        </div>
+                    </button>
                 </li>
                 {% endfor %}
             </ul>

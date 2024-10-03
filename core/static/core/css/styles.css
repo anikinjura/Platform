@@ -1,6 +1,4 @@
-/* core/static/core/css/styles.css */
-
-/* Стили для навигационной панели */
+/* Общие стили для навигационной панели */
 .sidebar {
     width: 250px;
     transition: width 0.3s;
@@ -10,52 +8,52 @@
     width: 70px;
 }
 
-.sidebar .nav-item {
-    position: relative;
+/* Скрытие подменю по умолчанию */
+.submenu {
+    display: none; /* Скрываем подменю по умолчанию */
 }
 
-/* Скрытие тултипов при развернутой панели */
-.sidebar:not(.collapsed) .nav-item [data-bs-toggle="tooltip"] {
-    pointer-events: none;
+/* Показываем подменю при наведении на элемент с классом has-submenu */
+.has-submenu:hover .submenu {
+    display: block; /* Показываем подменю при наведении */
 }
 
-/* Стили ссылок в навигационной панели */
-.sidebar .nav-link {
+/* Стили для кнопок в навигационной панели */
+.menu-item.button {
+    width: 100%;
     display: flex;
     align-items: center;
-    padding: 10px 15px;
-}
-
-.sidebar .nav-link i {
-    margin-right: 10px;
-    font-size: 1.2rem;
-}
-
-/* Скрытие текста ссылок при сворачивании */
-.sidebar.collapsed .link-text {
-    display: none;
-}
-
-/* Добавляем отступы для подприложений */
-.nav .ms-3 {
-    margin-left: 1rem;
-}
-
-/* Стили для иконки кнопки сворачивания/разворачивания */
-.sidebar-header .btn {
-    font-size: 1.5rem;
+    justify-content: space-between;
+    background: transparent;
     border: none;
-    background-color: transparent;
+    padding: 10px;
+    cursor: pointer;
 }
 
-/* Изменение цвета иконки на серый */
-.sidebar-header .btn .toggle-icon {
-    color: #6c757d; /* Серый цвет */
-}
-
-/* Стили для основного контента */
-.content {
+/* Выравнивание текста по левому краю */
+.menu-label {
     flex-grow: 1;
-    padding: 20px;
-    background-color: #f8f9fa;
+    text-align: left; /* Выравнивание по левому краю */
+}
+
+/* Стили для текста метки */
+.label-text {
+    font-size: 1rem; /* Размер текста */
+}
+
+/* Стили для иконок */
+.menu-icon svg,
+.menu-arrow svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Стили для кнопок при наведении */
+.menu-item.button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Цвет фона при наведении */
+}
+
+/* Увеличиваем отступ между иконкой и текстом */
+.menu-icon {
+    margin-right: 15px; /* Отступ от иконки до текста */
 }
