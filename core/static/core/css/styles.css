@@ -53,6 +53,9 @@ body {
     background-color: #333;
     padding: 16px;
     box-sizing: border-box;
+    display: flex; /* Изменено для flexbox */
+    flex-direction: column; /* Изменено для вертикального размещения */
+    justify-content: space-between; /* Размещение кнопки внизу */
     transition: width 0.3s ease;
 }
 
@@ -60,12 +63,11 @@ body {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    flex-grow: 1; /* Позволяет навигационному меню занимать оставшуюся высоту */
 }
 
 .menu-content {
-    display: grid;
-    grid-template-rows: 1fr auto;
-    height: 100%;
+    display: block; /* Изменено для поддержания структуры */
 }
 
 .menu-items {
@@ -82,7 +84,8 @@ body {
     margin-top: 16px;
 }
 
-.menu-button {
+.menu-button,
+.toggle-button {
     display: grid;
     grid-template-columns: max-content 1fr max-content;
     align-items: center;
@@ -95,8 +98,9 @@ body {
     transition: background-color 0.2s ease;
 }
 
-.menu-button:hover {
-    background-color: #444;
+.menu-button:hover,
+.toggle-button:hover {
+    background-color: #444; /* Общий цвет для кнопок при наведении */
 }
 
 .menu-icon {
@@ -117,7 +121,6 @@ body {
 }
 
 .menu-toggle {
-    margin-top: 16px;
     text-align: center;
 }
 
