@@ -1,3 +1,51 @@
+/* core/static/core/css/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444;
+    padding: 16px;
+    color: #fff;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo svg {
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    margin-right: 8px;
+}
+
+.layout {
+    display: flex;
+}
+
+.content-container {
+    margin-left: 260px;
+    padding: 16px;
+}
+
 .navigation-container {
     width: 260px;
     position: fixed;
@@ -5,6 +53,7 @@
     background-color: #333;
     padding: 16px;
     box-sizing: border-box;
+    transition: width 0.3s ease;
 }
 
 .navigation-menu {
@@ -82,4 +131,12 @@
     width: 24px;
     height: 24px;
     background-color: currentColor;
+}
+
+.navigation-container.collapsed {
+    width: 60px;
+}
+
+.menu-text.collapsed {
+    display: none;
 }
