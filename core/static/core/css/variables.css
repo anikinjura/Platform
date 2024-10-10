@@ -1,0 +1,22 @@
+/* core/static/core/css/variables.css */
+
+/* Цветовая палитра */
+:root {
+    --global-font: Arial, sans-serif; /* Основной шрифт */
+    
+    /* Цвета */
+    --header-bg-color: #444; /* Фон шапки */
+    --header-text-color: #fff; /* Текст шапки */
+    --menu-bg-color: #203148; /* Фон панели навигации */
+    --menu-text-color: #fff; /* Текст панели навигации */
+    --menu-hover-bg-color: #444; /* Фон при наведении на элементы меню */
+    --border-color: #ccc; /* Цвет бордюров */
+    --icon-color: currentColor; /* Цвет иконок */
+    
+    /* Размеры */
+    --icon-size: 24px; /* Размер иконок */
+    --arrow-size: 16px; /* Размер стрелок подменю */
+    --menu-width: 260px; /* Ширина навигационной панели */
+    --menu-collapsed-width: 60px; /* Ширина свёрнутой панели */
+    --content-padding: 16px; /* Отступы контента */
+}

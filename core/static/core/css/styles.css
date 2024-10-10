@@ -1,19 +1,23 @@
 /* core/static/core/css/styles.css */
+
+/* Общие стили для всего документа (страницы) */
 body {
-    font-family: Arial, sans-serif;
+    font-family: var(--global-font); /* Используем шрифт через переменную */
     margin: 0;
     padding: 0;
 }
 
+/* Шапка сайта (header) */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #444;
-    padding: 16px;
-    color: #fff;
+    background-color: var(--header-bg-color); /* Используем переменную для фона */
+    padding: var(--content-padding); /* Внутренний отступ через переменную */
+    color: var(--header-text-color); /* Используем переменную для цвета текста */
 }
 
+/* Логотип (внутри шапки) */
 .logo {
     display: flex;
     align-items: center;
@@ -23,67 +27,81 @@ body {
     margin-right: 8px;
 }
 
+/* Текст логотипа */
 .logo-text {
     font-size: 1.2em;
     font-weight: bold;
 }
 
+/* Информация о пользователе */
 .user-info {
     display: flex;
     align-items: center;
 }
 
+/* Имя пользователя */
 .user-name {
     margin-right: 8px;
 }
 
+/* Макет страницы */
 .layout {
     display: flex;
 }
 
+/* Контейнер для основного контента */
 .content-container {
-    margin-left: 260px;
-    padding: 16px;
+    margin-left: var(--menu-width); /* Отступ слева через переменную */
+    padding: var(--content-padding); /* Внутренний отступ через переменную */
 }
 
+/* Панель навигации */
 .navigation-container {
-    width: 260px;
+    width: var(--menu-width); /* Ширина панели через переменную */
     position: fixed;
     height: 100vh;
-    background-color: #333;
-    padding: 16px;
+    background-color: var(--menu-bg-color); /* Фон панели через переменную */
+    padding: var(--content-padding); /* Внутренний отступ через переменную */
     box-sizing: border-box;
-    display: flex; /* Изменено для flexbox */
-    flex-direction: column; /* Изменено для вертикального размещения */
-    justify-content: space-between; /* Размещение кнопки внизу */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transition: width 0.3s ease;
 }
 
+/* Список навигационного меню */
 .navigation-menu {
+    height: calc(100% - 60px);
     list-style-type: none;
     margin: 0;
     padding: 0;
-    flex-grow: 1; /* Позволяет навигационному меню занимать оставшуюся высоту */
+    display: flex;
+    flex-direction: column;
 }
 
+/* Контент внутри меню */
 .menu-content {
-    display: block; /* Изменено для поддержания структуры */
+    flex-grow: 1;
 }
 
+/* Элементы внутри меню */
 .menu-items {
     padding-bottom: 16px;
 }
 
+/* Группы элементов меню */
 .menu-group {
     margin-bottom: 8px;
     padding-bottom: 8px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color); /* Цвет бордюров через переменную */
 }
 
+/* Отдельный элемент меню */
 .menu-item {
     margin-top: 16px;
 }
 
+/* Кнопка меню и кнопка сворачивания панели */
 .menu-button,
 .toggle-button {
     display: grid;
@@ -98,48 +116,58 @@ body {
     transition: background-color 0.2s ease;
 }
 
+/* Эффект при наведении на кнопку меню и кнопку сворачивания */
 .menu-button:hover,
 .toggle-button:hover {
-    background-color: #444; /* Общий цвет для кнопок при наведении */
+    background-color: var(--menu-hover-bg-color); /* Фон при наведении через переменную */
 }
 
+/* Иконка элемента меню */
 .menu-icon {
-    width: 24px;
-    height: 24px;
-    background-color: currentColor;
+    width: var(--icon-size); /* Используем переменную для размера иконок */
+    height: var(--icon-size);
+    background-color: var(--icon-color); /* Используем переменную для цвета иконок */
 }
 
+/* Текст элемента меню */
 .menu-text {
     margin-left: 8px;
-    color: #fff;
+    color: var(--menu-text-color); /* Цвет текста через переменную */
 }
 
+/* Стрелка, указывающая наличие подменю */
 .menu-arrow {
-    width: 16px;
-    height: 16px;
-    background-color: currentColor;
+    width: var(--arrow-size); /* Используем переменную для размера стрелки */
+    height: var(--arrow-size);
+    background-color: var(--icon-color);
 }
 
+/* Блок для кнопки сворачивания панели */
 .menu-toggle {
+    margin-top: auto;
     text-align: center;
 }
 
+/* Стили для самой кнопки сворачивания */
 .toggle-button {
     background: transparent;
     border: none;
     cursor: pointer;
 }
 
+/* Иконка кнопки сворачивания */
 .toggle-icon {
-    width: 24px;
-    height: 24px;
-    background-color: currentColor;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    background-color: var(--icon-color);
 }
 
+/* Стили для состояния свёрнутой панели */
 .navigation-container.collapsed {
-    width: 60px;
+    width: var(--menu-collapsed-width); /* Используем переменную для ширины свёрнутой панели */
 }
 
+/* Убираем текст в меню при свёрнутой панели */
 .menu-text.collapsed {
     display: none;
 }
