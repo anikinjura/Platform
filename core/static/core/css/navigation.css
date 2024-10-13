@@ -1,0 +1,22 @@
+/* core/static/core/css/navigation.css */
+
+/* Навигационная панель */
+.navigation {
+    position: fixed; /* Фиксированное положение навигационной панели */
+    top: var(--header-height); /* Отступ от шапки */
+    left: 0;
+    width: var(--navigation-width); /* Используем переменную для ширины навигационной панели */
+    height: calc(100vh - var(--header-height)); /* Высота равная высоте экрана минус высота шапки */
+    background-color: var(--navigation-bg-color); /* Используем переменную для цвета фона навигационной панели */
+    padding: var(--navigation-padding); /* Используем переменную для внутренних отступов */
+    overflow-y: auto; /* Прокрутка по вертикали */
+}
+
+/* Стили для элементов навигации */
+.navigation-menu {
+    list-style: none; /* Убираем маркеры списка */
+}
+
+.navigation-menu li {
+    margin: 10px 0; /* Отступ между элементами списка */
+}

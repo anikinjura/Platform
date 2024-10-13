@@ -1,22 +1,14 @@
 /* core/static/core/css/variables.css */
 
-/* Цветовая палитра */
 :root {
-    --global-font: Arial, sans-serif; /* Основной шрифт */
-    
-    /* Цвета */
-    --header-bg-color: #444; /* Фон шапки */
-    --header-text-color: #fff; /* Текст шапки */
-    --menu-bg-color: #203148; /* Фон панели навигации */
-    --menu-text-color: #fff; /* Текст панели навигации */
-    --menu-hover-bg-color: #444; /* Фон при наведении на элементы меню */
-    --border-color: #ccc; /* Цвет бордюров */
-    --icon-color: currentColor; /* Цвет иконок */
-    
-    /* Размеры */
-    --icon-size: 24px; /* Размер иконок */
-    --arrow-size: 16px; /* Размер стрелок подменю */
-    --menu-width: 260px; /* Ширина навигационной панели */
-    --menu-collapsed-width: 60px; /* Ширина свёрнутой панели */
-    --content-padding: 16px; /* Отступы контента */
+    --font-family: Arial, sans-serif; /* Основной шрифт */
+    --header-bg-color: #fff; /* Цвет фона шапки */
+    --header-text-color: #001122f2; /* Цвет текста шапки */
+    --header-icon-color: #6183a229; /* Цвет иконок шапки*/
+    --header-height: 50px; /* Высота шапки */
+    --header-z-index: 1501; /* z-index для шапки */
+    --navigation-bg-color: #203148; /* Цвет фона навигационной панели */
+    --navigation-width: 200px; /* Ширина навигационной панели */
+    --navigation-padding: 20px; /* Внутренние отступы навигационной панели */
+    --content-padding: 20px; /* Внутренние отступы для контента */
 }

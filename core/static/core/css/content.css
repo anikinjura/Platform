@@ -1,0 +1,9 @@
+/* core/static/core/css/content.css */
+
+/* Контейнер для основного контента */
+.content-container {
+    margin-left: calc(var(--navigation-width) + var(--content-padding)); /* Отступ слева, чтобы учесть ширину навигационной панели */
+    padding: var(--content-padding); /* Используем переменную для внутренних отступов для контента */
+    padding-top: var(--header-height); /* Отступ сверху для шапки */
+    min-height: calc(100vh - var(--header-height)); /* Минимальная высота равная высоте экрана минус высота шапки */
+}

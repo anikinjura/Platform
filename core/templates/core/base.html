@@ -1,4 +1,3 @@
-<!-- core/templates/core/base.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,21 +7,21 @@
     <!-- Подключение стилей -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'core/css/variables.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/navigation.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/content.css' %}">
 </head>
 <body>
     <!-- Включаем шаблон шапки -->
     {% include 'core/header.html' %}
-    <!-- Основная структура страницы: навигация и контент -->
+
+    <!-- Основная структура страницы -->
     <div class="layout">
         <!-- Включаем шаблон навигационной панели -->
         {% include 'core/navigation.html' %}
-        <!-- Контейнер для основного контента -->
-        <div class="content-container">
-            {% block content %}
-            <!-- Место для основного контента страниц -->
-            {% endblock %}
-        </div>
+
+        <!-- Включаем шаблон для основного контента -->
+        {% include 'core/content.html' %}
     </div>
 </body>
 </html>

@@ -1,0 +1,62 @@
+/* core/static/core/css/header.css */
+
+.body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-feature-settings: normal;
+    font-variant-numeric: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 24px;
+    text-decoration: none;
+    text-transform: none;
+}
+
+/* Шапка */
+.header {
+    position: fixed; /* Фиксированное положение шапки */
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--header-bg-color); /* Используем переменную для цвета фона */
+    color: var(--header-text-color); /* Используем переменную для цвета текста */
+    padding: 10px var(--content-padding); /* Внутренние отступы */
+    z-index: var(--header-z-index); /* Обеспечим, чтобы шапка была выше других элементов */
+    box-shadow: inset 0 -2px 0 0 var(--header-icon-color);
+}
+
+/* Контейнер для элементов шапки */
+.header-container {
+    display: flex; /* Flexbox для выравнивания элементов */
+    justify-content: space-between; /* Распределение элементов по ширине */
+    align-items: center; /* Вертикальное центрирование */
+}
+
+/* Контейнер для действий в шапке */
+.header-bar {
+    display: flex; /* Flexbox для выравнивания элементов внутри */
+    align-items: center; /* Вертикальное центрирование элементов внутри */
+    justify-content: space-between; /* Если нужно распределить элементы */
+}
+
+/* Контейнер для профиля пользователя */
+.user-info {
+    display: flex; /* Flexbox для выравнивания элементов внутри */
+    align-items: center; /* Вертикальное центрирование элементов внутри */
+    color: var(--header-text-color);
+    gap: 16px;
+}
+
+/* Стили для элементов внутри header-bar */
+.header-separator {
+    background-color: var(--header-icon-color);
+    height: 32px;
+    margin-left: 3px;
+    margin-right: 4px;
+    width: 1px;
+}
+
+.header-actions {
+    display: flex; /* Если внутри тоже есть элементы, которые нужно выровнять */
+    align-items: center;
+}
