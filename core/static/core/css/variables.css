@@ -1,10 +1,11 @@
 /* core/static/core/css/variables.css */
 
 :root {
-    --font-family: Arial, sans-serif; /* Основной шрифт */
+    --font-family: Inter, Arial, Helvetica, sans-serif; /* Шрифт по умолчанию */
     --header-bg-color: #fff; /* Цвет фона шапки */
     --header-text-color: #001122f2; /* Цвет текста шапки */
-    --header-icon-color: #6183a229; /* Цвет иконок шапки*/
+    --header-icon-color: #00112273; /* Цвет иконок шапки*/
+    --header-shadow-color: #6183a229; /* Цвет тени шапки */
     --header-height: 50px; /* Высота шапки */
     --header-z-index: 1501; /* z-index для шапки */
     --navigation-bg-color: #203148; /* Цвет фона навигационной панели */
